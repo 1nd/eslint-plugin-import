@@ -133,6 +133,14 @@ ruleTester.run('dynamic-import-chunkname', rule, {
     },
     {
       code: `import(
+        /* webpackMode: "eager" */
+        'test'
+      )`,
+      options,
+      parser,
+    },
+    {
+      code: `import(
         /* webpackChunkName: "someModule" */
         'someModule'
       )`,
