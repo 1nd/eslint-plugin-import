@@ -33,6 +33,8 @@ module.exports = {
     const commentStyleRegex = /^( \w+: ("[^"]*"|\d+|false|true),?)+ $/
     const chunkSubstrFormat = ` webpackChunkName: "${webpackChunknameFormat}",? `
     const chunkSubstrRegex = new RegExp(chunkSubstrFormat)
+    const chunkEagerFormat = ` webpackMode: "eager",? `
+    const chunkEagerRegex = new RegExp(chunkEagerFormat)
 
     return {
       CallExpression(node) {
@@ -52,6 +54,7 @@ module.exports = {
           return
         }
 
+        let eager = false
         let isChunknamePresent = false
 
         for (const comment of leadingComments) {
@@ -92,12 +95,16 @@ module.exports = {
             return
           }
 
+          if (chunkEagerRegex.test(comment.value)) {
+            eager = true
+          }
+
           if (chunkSubstrRegex.test(comment.value)) {
             isChunknamePresent = true
           }
         }
 
-        if (!isChunknamePresent) {
+        if (!eager && !isChunknamePresent) {
           context.report({
             node,
             message:
