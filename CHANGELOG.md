@@ -5,6 +5,8 @@ This change log adheres to standards from [Keep a CHANGELOG](http://keepachangel
 
 ## [Unreleased]
 
+## [2.18.0] - 2019-06-11
+
 ### Added
 - [`dynamic-import-chunkname`]: Supports `webpackMode: "eager"`
 
